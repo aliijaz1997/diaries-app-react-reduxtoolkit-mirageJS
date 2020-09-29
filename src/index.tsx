@@ -3,7 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './Components/In-built-Files/App';
 import * as serviceWorker from './serviceWorker';
+import { fakeservermake } from "./Components/Mirage-Server/server";
 
+fakeservermake();
 ReactDOM.render(
   <React.StrictMode>
     <App />
