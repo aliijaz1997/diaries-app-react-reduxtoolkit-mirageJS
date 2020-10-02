@@ -1,34 +1,37 @@
-import axios, {AxiosError, AxiosInstance, AxiosResponse} from 'axios';
+import axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios';
+// import { showAlert } from '../util';
 
-// 1 we have to make an instance for baseURL
+const http: AxiosInstance = axios.create({
+  baseURL: 'api',
+});
 
-const instance : AxiosInstance = axios.create({
-    baseURL: 'api',
+http.defaults.headers.post['Content-Type'] = 'application/json';
 
-    // you can write much more properties
-}) 
-
-instance.interceptors.response.use(
-    // what this async function will do fetch the respnse and will check 
-    // the status because the standard code should be in the range of 2xx
-    // otherwise error will be occur
-    async (response : AxiosResponse) : Promise <any> => {
-        if (response.status >= 200 && response.status < 300) {
-            return response.data
-        }
-    },
-    (error : AxiosError) => {
-         const {response , request} : {response ?: AxiosResponse , request ?: XMLHttpRequest} = error;
-         if (response) {
-             if (response.status >= 400 && response.status < 500)
-             {
-                 return null;
-             }
-         } else if (request) {
-             return null;
-         }
-
-         return Promise.reject(error);
-
+http.interceptors.response.use(
+  async (response: AxiosResponse): Promise<any> => {
+    if (response.status >= 200 && response.status < 300) {
+      return response.data;
     }
-)
+  },
+  (error: AxiosError) => {
+    const {
+      response,
+      request,
+    }: { response?: AxiosResponse; request?: XMLHttpRequest } = error;
+    if (response) {
+      if (response.status >= 400 && response.status < 500) {
+        // showAlert(response.data?.data?.message, 'error');
+        console.log(response.data?.data?.message);
+        
+        return null;
+      }
+    } else if (request) {
+        console.log("Request failed");
+        
+      return null;
+    }
+    return Promise.reject(error);
+  }
+);
+
+export default http;

@@ -1,8 +1,8 @@
 export interface entry {
-    id : string,
+    id ?: string,
     titleofentry : string,
     description : string,
-    timeanddatewhenentrycreated : string,
-    timeanddatewhenentryupdated : string
+    timeanddatewhenentrycreated ?: string,
+    timeanddatewhenentryupdated ?: string
 
 }

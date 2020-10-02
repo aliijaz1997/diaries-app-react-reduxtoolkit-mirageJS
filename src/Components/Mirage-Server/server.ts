@@ -34,15 +34,15 @@ export const fakeservermake = () => {
         },
 
         factories : {
-            userr : Factory.extend({
+            user : Factory.extend({
                 username : 'ali',
                 password : 'aliijaz',
                 email : 'ali@email.com'
             })
         },
 
-        seeds : (dummyserver) => {
-             dummyserver.create('userr')
+        seeds : (dummyserver) : any => {
+             dummyserver.create('user')
         },
 
         routes() : void {
