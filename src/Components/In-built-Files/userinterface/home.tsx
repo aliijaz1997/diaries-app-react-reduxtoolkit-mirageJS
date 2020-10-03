@@ -1,9 +1,10 @@
 import React from 'react';
-import Diarieslist from "./Diarieslist"
-function Home() {
+import Diaries from './diaries';
+import Editor from './editor';function Home() {
   return (
     <div className="App">
-       <Diarieslist/>
+      <Editor/>
+       <Diaries/>
     </div>
   );
 }

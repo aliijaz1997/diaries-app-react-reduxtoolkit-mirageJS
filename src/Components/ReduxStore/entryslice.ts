@@ -1,4 +1,4 @@
-import { createAction, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {entry} from './../Interfaces/entry.interface';
 
 const entryslice = createSlice({
