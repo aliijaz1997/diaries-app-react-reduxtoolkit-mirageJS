@@ -6,8 +6,8 @@ import { diary } from '../../Interfaces/diary.interface';
 import { creatediary } from './../../ReduxStore/diaryslice';
 import Swal from 'sweetalert2';
 import { setuser } from '../../ReduxStore/userslice';
-import DiaryTile from './../userinterface/diaryface';
-import { user } from './../../Interfaces/user.interface';
+import DiaryTile from './diaryface';
+import { user } from '../../Interfaces/user.interface';
 import { Route, Switch } from 'react-router-dom';
 import DiaryEntriesList from './diaryentrieslist';
 import { useDispatch } from 'react-redux';
@@ -37,7 +37,7 @@ const Diaries: FC = () => {
   const createDiary = async () => {
     const result : any = await Swal.mixin({
       input: 'text',
-      confirmButtonText: 'Next &rarr;',
+      confirmButtonText: 'Next →',
       showCancelButton: true,
       progressSteps: ['1', '2'],
     }).queue([
@@ -57,22 +57,18 @@ const Diaries: FC = () => {
     ]);
     if (result.value) {
       const { value } = result;
-      console.log(value);
-      
-      const { diary, user: _user } = await http.post<
-        Partial<diary>,
-        { diary: diary; user: user }
-      >('/diaries/', {
-        titleofdiary: value[0],
+      const {
+        diary,
+        user: _user,
+      } = await http.post<Partial<diary>, { diary: diary; user: user }>('/diaries/', {
+        title: value[0],
         type: value[1],
-        userid: user?.id,
+        userId: user?.id,
       });
-      
       if (diary && user) {
         dispatch(creatediary([diary] as diary[]));
         dispatch(creatediary([diary] as diary[]));
         dispatch(setuser(_user));
-
         return Swal.fire({
           titleText: 'All done!',
           confirmButtonText: 'OK!',
@@ -92,7 +88,7 @@ const Diaries: FC = () => {
         </Route>
         <Route path="/">
           <button onClick={createDiary}>Create New</button>
-          {diaries.map((diary : any, idx : number) => (
+          {diaries.map((diary, idx) => (
             <DiaryTile key={idx} diary={diary} />
           ))}
         </Route>

@@ -10,9 +10,10 @@ import dayjs from 'dayjs';
 import { useDispatch } from 'react-redux';
 
 const DiaryEntriesList: FC = () => {
+  
   const { enteries } = useSelector((state: combinereducertype) => state);
   const dispatch = useDispatch();
-  const { id } = useParams();
+  const {  } = useParams();
 
   useEffect(() => {
     if (id != null) {
