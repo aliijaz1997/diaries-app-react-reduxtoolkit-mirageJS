@@ -2,11 +2,13 @@ import React, { FC, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { combinereducertype } from '../../ReduxStore/combinereducers';
 import http from '../../Mirage-Server/Axios/axios-api';
+//eslint-disable-next-line
 import { diary } from '../../Interfaces/diary.interface';
 import { addDiary, updateDiary } from './../../ReduxStore/diaryslice';
 import Swal from 'sweetalert2';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import LockOpenOutlinedIcon from '@material-ui/icons/LockOpenOutlined';
+//eslint-disable-next-line
 import { user } from '../../Interfaces/user.interface';
 import { setuser } from '../../ReduxStore/userslice';
 import { Link, Route, Switch } from 'react-router-dom';

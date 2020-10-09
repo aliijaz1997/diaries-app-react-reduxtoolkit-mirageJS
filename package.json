@@ -15,6 +15,7 @@
     "@types/react-dom": "^16.9.8",
     "axios": "^0.20.0",
     "dayjs": "^1.9.0",
+    "lint": "^0.7.0",
     "markdown-to-jsx": "^7.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -31,10 +32,14 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint src/**/*.js src/**/*.jsx"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended"
+    ]
   },
   "browserslist": {
     "production": [
@@ -53,6 +58,7 @@
     "@types/react-redux": "^7.1.9",
     "@types/react-router-dom": "^5.1.5",
     "@types/yup": "^0.29.7",
+    "eslint-plugin-react": "^7.21.3",
     "miragejs": "^0.1.41"
   }
 }

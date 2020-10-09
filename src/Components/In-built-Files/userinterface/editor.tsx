@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { combinereducertype } from '../../ReduxStore/combinereducers';
 import Markdown from 'markdown-to-jsx';
 import http from '../../Mirage-Server/Axios/axios-api';
+//eslint-disable-next-line
 import { entry } from './../../Interfaces/entry.interface';
 import { diary } from '../../Interfaces/diary.interface';
 import { setCurrentlyEditing, setCanEdit } from './../../ReduxStore/editorslice';
