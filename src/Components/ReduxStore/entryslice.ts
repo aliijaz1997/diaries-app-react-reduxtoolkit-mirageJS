@@ -1,22 +1,23 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import {entry} from './../Interfaces/entry.interface';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { entry } from '../Interfaces/entry.interface';
 
-const entryslice = createSlice({
-    name : 'Entry Slice',
-    initialState : [] as entry[],
-    reducers : {
-        setentries (state , {payload} : PayloadAction <entry[] | null>) {
-            return state = payload != null ?  payload : []
-            
-        } ,
-        updateentry (state, {payload} : PayloadAction <entry>) {
-            const index = state.findIndex((diary) => diary.id === payload.id )
-            if (index !== -1) {
-                state.splice(index, 1, payload)
-            }
-        }
-    }
-})
+const entries = createSlice({
+  name: 'entries',
+  initialState: [] as entry[],
+  reducers: {
+    setEntries(state, { payload }: PayloadAction<entry[] | null>) {
+      return (state = payload != null ? payload : []);
+    },
+    updateEntry(state, { payload }: PayloadAction<entry>) {
+      const { id } = payload;
+      const index = state.findIndex((e) => e.id === id);
+      if (index !== -1) {
+        state.splice(index, 1, payload);
+      }
+    },
+  },
+});
 
-export const {setentries, updateentry} = entryslice.actions;
-export default entryslice.reducer;
+export const { setEntries, updateEntry } = entries.actions;
+
+export default entries.reducer;

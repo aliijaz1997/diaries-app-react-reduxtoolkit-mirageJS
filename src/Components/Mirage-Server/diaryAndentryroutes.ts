@@ -1,128 +1,122 @@
-import { Request, Response } from "miragejs";
-import  {diary} from "../Interfaces/diary.interface";
-import { user } from "./../Interfaces/user.interface";
-import { entry } from "../Interfaces/entry.interface";
-import { errorhandler } from "./server";
-import dayjs from "dayjs";
-// import { JsxEmit } from "typescript";
+import { Response, Request } from 'miragejs';
+import { handleErrors } from './server';
+import { diary } from '../Interfaces/diary.interface';
+import { entry } from '../Interfaces/entry.interface';
+import dayjs from 'dayjs';
+import { user } from '../Interfaces/user.interface';
 
-// Creating the function will return the new diary associated with user
 
-export const createDiary = (schema: any, request: Request): { user: user, diary: diary } | Response => {
-
+export const create = (
+    schema: any,
+    req: Request
+  ): { user: user; diary: diary } | Response => {
     try {
-        const { titleofdiary, userid, type } = JSON.parse(request.requestBody)
-        const alreadyexistuser = schema.findBy({ id: userid })
-        if (!alreadyexistuser) {
-            return errorhandler(null, 'User not exist')
-        }
-        const timaeanddate = dayjs().format()
-        const newdiary = alreadyexistuser.createDiary({
-            titleofdiary,
-            type,
-            timaeanddatewhendiarycreated: timaeanddate,
-            timaeanddatewhendiaryupdated: timaeanddate
-        })
-
-        return {
-            user: {
-                ...alreadyexistuser.attrs,
-            },
-            diary: newdiary.attrs
-        };
-
-
+      const { titleofdiary, type, userid } = JSON.parse(req.requestBody) as Partial<
+        diary
+      >;
+      const exUser = schema.users.findBy({ id: userid });
+      if (!exUser) {
+        return handleErrors(null, 'No such user exists.');
+      }
+      const now = dayjs().format();
+      console.log(now);
+      
+      const diary = exUser.createDiary({
+        titleofdiary,
+        type,
+        timeanddatewhendiarycreated: now,
+        timeanddatewhendiaryupdated: now,
+      });
+      console.log(diary);
+      
+      return {
+        user: {
+          ...exUser.attrs,
+        },
+        diary: diary.attrs,
+      };
     } catch (error) {
-        return errorhandler(null, 'Failed to create diary');
+      return handleErrors(error, 'Failed to create Diary.');
     }
-}
-//This function will update the diary
-export const updateDiary = (schema : any , request: Request) : diary | Response => {
+  };
+  
+  export const updateDiary = (schema: any, req: Request): diary | Response => {
     try {
-    
-    const data = JSON.parse(request.requestBody)
-    const diarytobeupdated = schema.find(request.params.id)
-    const timeanddate = dayjs().format();
-    diarytobeupdated.update({
-        ...data, timaeanddatewhendiaryupdated: timeanddate
-    })
-    return diarytobeupdated.attrs as diary;
-} catch (error) {
-    return errorhandler(null, 'Failed to update diary')
-}
-}
-
-export const getthelistofdiaries = (schema : any , request: Request) : diary[] | Response =>{
-
-  try {
-       
-    const user = schema.find(request.params.id)
-
-    return user.diary as diary[]
-}
-catch (error) {
-    return errorhandler(null, 'Failed to get the list of diaries')
-}
-}
-
-export const createnewentry = (schema : any , request : Request) : {diary : diary, entry : entry} | Response => {
-    try {
-        const {titleofentry, description} = JSON.parse(request.requestBody)
-        const diary = schema.find(request.params.id)
-        const timeanddate = dayjs().format();
-        const entry = diary.createEntry({
-            titleofentry,
-            description,
-            timeanddatewhenentrycreated : timeanddate,
-            timeanddatewhenentryupdated : timeanddate
-        })
-        diary.update({
-            ...diary.attrs, timaeanddatewhendiaryupdated : timeanddate
-        })
-
-        return {
-            diary : diary.attrs,
-            entry : entry.attrs
-        }
-    }
-    catch (error) {
-        return errorhandler(null, 'Cannot create new entry');
-    }
-}
-
-export const getthelistofentries = (schema : any, request : Request) : entry[] | Response => {
-    try {
-        const diary = schema.find(request.params.id)
-       return diary.entry as entry[]
-
+      const diary = schema.diaries.find(req.params.id);
+      const data = JSON.parse(req.requestBody) as Partial<diary>;
+      const now = dayjs().format();
+      
+      diary.update({
+        ...data,
+        timeanddatewhendiaryupdated: now,
+      });
+      return diary.attrs as diary;
     } catch (error) {
-        return errorhandler(null, 'Error in getting the list of entries')
-        
+      return handleErrors(error, 'Failed to update Diary.');
     }
-}
-
-export const updatetheentry = (schema : any, request : Request) : entry | Response => {
+  };
+  
+  export const getDiaries = (schema: any, req: Request): diary[] | Response => {
     try {
-        // The const entry will find the entry which is to be updated
-        // The const data will get the data from the entry which is to be updated
-        const entry = schema.find(request.params.id)
-        const data = JSON.parse(request.requestBody) as Partial<entry>
-        const timeanddate = dayjs().format()
-        entry.update({
-            ...data, timeanddatewhenentryupdated : timeanddate
-        })
-
-        return entry.attrs as entry;
-            
+      const user = schema.users.find(req.params.id);
+      return user.diary as diary[];
     } catch (error) {
-      return errorhandler(null, 'Unable to update entry')
+      return handleErrors(error, 'Could not get user diaries.');
     }
-}
+  };
 
-
-
-
-
-
-
-
+  export const addEntry = (
+    schema: any,
+    req: Request
+  ): { diary: diary; entry: entry } | Response => {
+    try {
+      const diary = schema.diaries.find(req.params.id);
+      const { titleofentry, description } = JSON.parse(req.requestBody) as Partial<entry>;
+      const now = dayjs().format();
+      const entry = diary.createEntry({
+        titleofentry,
+        description,
+        timeanddatewhenentrycreated: now,
+        timeanddatewhenentryupdated: now,
+      });
+      console.log(entry);
+      
+      diary.update({
+        ...diary.attrs,
+        timeanddatewhendiaryupdated: now,
+      });
+      return {
+        diary: diary.attrs,
+        entry: entry.attrs,
+      };
+    } catch (error) {
+      return handleErrors(error, 'Failed to save entry.');
+    }
+  };
+  
+  export const getEntries = (
+    schema: any,
+    req: Request
+  ): { entries: entry[] } | Response => {
+    try {
+      const diary = schema.diaries.find(req.params.id);
+      return diary.entry;
+    } catch (error) {
+      return handleErrors(error, 'Failed to get Diary entries.');
+    }
+  };
+  
+  export const updateEntry = (schema: any, req: Request): entry | Response => {
+    try {
+      const entry = schema.entries.find(req.params.id);
+      const data = JSON.parse(req.requestBody) as Partial<entry>;
+      const now = dayjs().format();
+      entry.update({
+        ...data,
+        timeanddatewhenentryupdated: now,
+      });
+      return entry.attrs as entry;
+    } catch (error) {
+      return handleErrors(error, 'Failed to update entry.');
+    }
+  };

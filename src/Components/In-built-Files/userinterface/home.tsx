@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import Diaries from './diaries';
-import Editor from './editor';function Home() {
+// import Editor from './editor';
+
+function Home() {
+//  const [editor, setEditor] = useState(false);
   return (
-    <div className="App">
-      <Editor/>
-       <Diaries/>
+    <div >
+       <Diaries />
     </div>
   );
 }

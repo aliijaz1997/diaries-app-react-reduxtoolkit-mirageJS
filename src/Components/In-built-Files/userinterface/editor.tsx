@@ -5,22 +5,28 @@ import Markdown from 'markdown-to-jsx';
 import http from '../../Mirage-Server/Axios/axios-api';
 import { entry } from './../../Interfaces/entry.interface';
 import { diary } from '../../Interfaces/diary.interface';
-import { setCurrentlyEditing, setCanEdit } from './../../ReduxStore/editorslice';
-import { updatediary } from '../../ReduxStore/diaryslice';
-import { updateentry } from './../../ReduxStore/entryslice';
+import { setCurrentlyEditing, setCanEdit, setActiveDiaryId } from './../../ReduxStore/editorslice';
+import { updateDiary } from '../../ReduxStore/diaryslice';
+import { updateEntry } from './../../ReduxStore/entryslice';
 // import { showAlert } from '../../util';
+import './editor.css';
 import { useDispatch } from 'react-redux';
-
-const Editor: FC = () => {
+type PropType = {
+  visible: boolean;
+  // editpossible : boolean;
+}
+const Editor: FC <PropType> = ({visible}) => {
   const { currentlyEditing: entry, canEdit, activeDiaryId } = useSelector(
     (state: combinereducertype) => state.editor
   );
+  // const [diary, setDiary] = useState(props.diary);
   const [editedEntry, updateEditedEntry] = useState(entry);
+  // const [editor, setEditor] = useState<boolean>(editpossible)
   const dispatch = useDispatch();
 
   const saveEntry = async () => {
     if (activeDiaryId == null) {
-    //   return showAlert('Please select a diary.', 'warning');
+      //   return showAlert('Please select a diary.', 'warning');
     }
     if (entry == null) {
       http
@@ -32,7 +38,7 @@ const Editor: FC = () => {
           if (data != null) {
             const { diary, entry: _entry } = data;
             dispatch(setCurrentlyEditing(_entry));
-            dispatch(updatediary(diary));
+            dispatch(updateDiary(diary));
           }
         });
     } else {
@@ -41,11 +47,12 @@ const Editor: FC = () => {
         .then((_entry) => {
           if (_entry != null) {
             dispatch(setCurrentlyEditing(_entry));
-            dispatch(updateentry(_entry));
+            dispatch(updateEntry(_entry));
           }
         });
     }
-    dispatch(setCanEdit(false));
+    // setEditor(!editpossible);
+    // dispatch(setCanEdit(false));
   };
 
   useEffect(() => {
@@ -53,7 +60,7 @@ const Editor: FC = () => {
   }, [entry]);
 
   return (
-    <div className="editor">
+    <div className = 'main' style={{ display: visible ? undefined : 'none' }} >
       <header
         style={{
           display: 'flex',
@@ -67,6 +74,7 @@ const Editor: FC = () => {
         {entry && !canEdit ? (
           <h4>
             {entry.titleofentry}
+            <br/>
             <a
               href="#edit"
               onClick={(e) => {
@@ -77,56 +85,59 @@ const Editor: FC = () => {
               }}
               style={{ marginLeft: '0.4em' }}
             >
-              (Edit)
+              <button>Edit</button>
             </a>
           </h4>
         ) : (
-          <input
-            value={editedEntry?.titleofentry ?? ''}
-            disabled={!canEdit}
-            onChange={(e) => {
-              if (editedEntry) {
-                updateEditedEntry({
-                  ...editedEntry,
-                  titleofentry: e.target.value,
-                });
-              } else {
-                updateEditedEntry({
+            <input
+            className = 'editorheading'
+              value={editedEntry?.titleofentry ?? ''}
+              disabled={!canEdit}
+              onChange={(e) => {
+                if (editedEntry) {
+                  updateEditedEntry({
+                    ...editedEntry,
                     titleofentry: e.target.value,
-                  description: '',
-                });
-              }
-            }}
-          />
-        )}
+                  });
+                } else {
+                  updateEditedEntry({
+                    titleofentry: e.target.value,
+                    description: '',
+                  });
+                }
+              }}
+            />
+          )}
       </header>
       {entry && !canEdit ? (
         <Markdown>{entry.description}</Markdown>
       ) : (
-        <>
-          <textarea
-            disabled={!canEdit}
-            placeholder="Supports markdown!"
-            value={editedEntry?.description ?? ''}
-            onChange={(e) => {
-              if (editedEntry) {
-                updateEditedEntry({
-                  ...editedEntry,
-                  description: e.target.value,
-                });
-              } else {
-                updateEditedEntry({
+          <>
+            <textarea
+              className = 'editor'
+              disabled={!canEdit}
+              placeholder="Supports markdown!"
+              value={editedEntry?.description ?? ''}
+              onChange={(e) => {
+                if (editedEntry) {
+                  updateEditedEntry({
+                    ...editedEntry,
+                    description: e.target.value,
+                  });
+                } else {
+                  updateEditedEntry({
                     titleofentry: '',
-                  description: e.target.value,
-                });
-              }
-            }}
-          />
-          <button onClick={saveEntry} disabled={!canEdit}>
-            Save
+                    description: e.target.value,
+                  });
+                }
+              }}
+            />
+            <br/>
+            <button className = 'myButton' onClick={saveEntry} disabled={!canEdit}>
+              Save
           </button>
-        </>
-      )}
+          </>
+        )}
     </div>
   );
 };

@@ -3,11 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './Components/In-built-Files/App';
 import * as serviceWorker from './serviceWorker';
-import { fakeservermake } from "./Components/Mirage-Server/server";
+import { setupServer } from "./Components/Mirage-Server/server";
 import { Provider } from "react-redux";
 import store from './Components/ReduxStore/store'
 
-fakeservermake();
+if (process.env.NODE_ENV === 'development') {
+  setupServer();
+}
 ReactDOM.render(
   <React.StrictMode>
     <Provider store = {store} >

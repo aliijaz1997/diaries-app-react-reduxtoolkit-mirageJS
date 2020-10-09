@@ -1,0 +1,62 @@
+.Container {
+    width: 300px;
+    background-color: black;
+}
+.button {
+    background-color: rgb(150, 151, 204); 
+    color: rgb(228, 225, 37); 
+    border: 2px solid #0827db;
+    font-size: 100%;
+    cursor: pointer;
+    padding: 5px;
+    margin: 3px 25px 4px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+.button:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+}
+.timeinfo {
+    color: saddlebrown;
+    font-weight: bolder;
+    font-size: 110%;
+}
+.time {
+    color: rgb(114, 107, 107);
+    font-weight: normal;
+}
+.heading {
+    text-align: center;
+    color: slategray;
+}
+.backimage {
+    min-height: 750px;
+    background-color: rgb(255, 2, 2); /* For browsers that do not support gradients */
+    background-image: linear-gradient(0deg, rgb(172, 167, 236), rgb(255, 255, 255));
+}
+.headingofdiaries {
+    margin: 0px auto 0px ;
+    font-size: 350%;
+    font-weight: bolder;
+    color: rgb(92, 13, 156);
+}
+.button333 {
+    margin: 7px 0px 0px 7px;
+}
+.mainentry {
+    max-width: 400px;
+    margin : 0px auto 0px;
+    display: inline-flex;
+    padding: 20px;
+}
+.tiltleofentry {
+    color: rgb(144, 59, 2);
+    text-align: center;
+}
+.descofentry {
+    color: rgb(226, 185, 131);
+}
+.timeanddate{
+    font-size: 10px;
+    color: cadetblue;
+}

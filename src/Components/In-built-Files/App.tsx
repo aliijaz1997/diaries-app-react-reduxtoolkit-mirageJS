@@ -7,7 +7,7 @@ const Home = lazy(() => import('./userinterface/home'));
 const Auth = lazy(() => import('./userinterface/auth'))
 const App: FC = () => {
   const islogin = useSelector(
-    (state: combinereducertype) => state.auth.isuserauthenticated
+    (state: combinereducertype) => state.auth.isAuthenticated
   )
   return (
     <div>

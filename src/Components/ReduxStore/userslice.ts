@@ -1,17 +1,15 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import {user} from './../Interfaces/user.interface';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { user } from '../Interfaces/user.interface';
 
-export const userslice = createSlice({
-    name : 'userslice',
-    initialState : null as user | null,
-    reducers : {
-        // This set user is basically doing that setting user to the default
-        // setting or null
-        setuser(state, {payload} : PayloadAction <user | null> ) {
-            return state = (payload != null) ? payload : null
-        }
-    }
-})
+const Userslice = createSlice({
+  name: 'user',
+  initialState: null as user | null,
+  reducers: {
+    setuser(state, { payload }: PayloadAction<user | null>) {
+      return state = (payload != null) ? payload : null;
+    },
+  },
+});
 
-export const {setuser} = userslice.actions
-export default userslice.reducer;
+export const { setuser } = Userslice.actions;
+export default Userslice.reducer;

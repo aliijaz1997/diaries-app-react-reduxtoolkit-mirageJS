@@ -1,0 +1,145 @@
+.main {
+    text-align: center;
+}
+@media only screen and (max-width: 600px) {
+    .editor {
+        max-width: 600px;
+        min-width: 375px;
+        min-height: 400px;
+        max-height: auto;
+        margin: 10px auto 0px;
+        border-color: cornflowerblue;
+        background-color: rgb(253, 254, 255);
+    }
+  }
+  
+  /* Small devices (portrait tablets and large phones, 600px and up) */
+  @media only screen and (min-width: 600px) {
+    .editor{
+        max-width: 600px;
+        min-width: 375px;
+        min-height: 400px;
+        max-height: auto;
+        margin: 10px auto 0px;
+        border-color: cornflowerblue;
+        background-color: rgb(253, 254, 255);
+    }
+  }
+  
+  /* Medium devices (landscape tablets, 768px and up) */
+  @media only screen and (min-width: 768px) {
+    .editor {
+        max-width: 600px;
+        min-width: 375px;
+        min-height: 400px;
+        max-height: auto;
+        margin: 10px auto 0px;
+        border-color: cornflowerblue;
+        background-color: rgb(253, 254, 255);
+    }
+  } 
+  
+  /* Large devices (laptops/desktops, 992px and up) */
+  @media only screen and (min-width: 992px) {
+    .editor{
+        max-width: 600px;
+        min-width: 375px;
+        min-height: 400px;
+        max-height: auto;
+        margin: 10px auto 0px;
+        border-color: cornflowerblue;
+        background-color: rgb(253, 254, 255);
+    }
+  } 
+
+  @media only screen and (max-width: 600px) {
+    .editorheading {
+        max-width: 600px;
+        min-width: 375px;
+        min-height: 50px;
+        margin : 10px auto 0px;
+        border-color: cornflowerblue;
+        background-color: rgb(253, 254, 255)
+    }
+  }
+  
+  /* Small devices (portrait tablets and large phones, 600px and up) */
+  @media only screen and (min-width: 600px) {
+    .editorheading{
+        max-width: 600px;
+        min-width: 375px;
+        min-height: 50px;
+        margin : 10px auto 0px;
+        /* margin-left: 510px; */
+        border-color: cornflowerblue;
+        background-color: rgb(253, 254, 255)
+    }
+  }
+  
+  /* Medium devices (landscape tablets, 768px and up) */
+  @media only screen and (min-width: 768px) {
+    .editorheading {
+        max-width: 600px;
+        min-width: 375px;
+        min-height: 50px;
+        margin : 10px auto 0px;
+        /* margin-left: 510px; */
+        border-color: cornflowerblue;
+        background-color: rgb(253, 254, 255)
+    }
+  } 
+  
+  /* Large devices (laptops/desktops, 992px and up) */
+  @media only screen and (min-width: 992px) {
+    .editorheading{
+        max-width: 600px;
+        min-width: 375px;
+        min-height: 50px;
+        margin : 10px auto 0px;
+        /* margin-left: 510px; */
+        border-color: cornflowerblue;
+        background-color: rgb(253, 254, 255)
+       
+    }
+  }
+.editor {
+    max-width: 600px;
+    min-width: 375px;
+    min-height: 400px;
+    max-height: auto;
+    margin: 10px auto 0px;
+    border-color: cornflowerblue;
+    background-color: rgb(253, 254, 255);
+}
+.editorheading {
+    max-width: 600px;
+    min-width: 375px;
+    min-height: 50px;
+    margin : 10px auto 0px;
+    border-color: cornflowerblue;
+    background-color: rgb(253, 254, 255)
+}
+.myButton {
+	box-shadow: 0px 0px 0px 2px #9fb4f2;
+	background:linear-gradient(to bottom, #7892c2 5%, #476e9e 100%);
+	background-color:#7892c2;
+	border-radius:10px;
+	border:1px solid #4e6096;
+    display:inline-block;
+    margin: 0px auto 0px;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:19px;
+	padding:12px 37px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #283966;
+}
+.myButton:hover {
+	background:linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
+	background-color:#476e9e;
+}
+/* .myButton:active {
+	position:relative;
+	top:1px;
+} */

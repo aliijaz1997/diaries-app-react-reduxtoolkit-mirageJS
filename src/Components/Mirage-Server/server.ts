@@ -1,61 +1,60 @@
-import { Response, Factory, Model, belongsTo, hasMany, Server } from "miragejs";
-// import { disposeEmitNodes } from "typescript";
-import * as diary from './diaryAndentryroutes'
-import user from './userRoutes'
-// 1st of all we have to make the universal
-// function to catch the errors
-// the response method in the errorhandler takes three
-// parameters (code, header, body) we mainly deal with body to recieve data
+import { Server, Model, Factory, belongsTo, hasMany, Response } from 'miragejs';
 
-export const errorhandler = (error: any, message = 'There is error occured') => {
-    console.log(error);
-    return new Response(400, undefined, {
-        data: {
-            message,
-            isError: true
+import user from './userRoutes';
+import * as diary from './diaryAndentryroutes';
 
-        }
-    });
-}
+export const handleErrors = (error: any, message = 'An error ocurred') => {
+  return new Response(400, undefined, {
+    data: {
+      message,
+      isError: true,
+    },
+  });
+};
 
-export const fakeservermake = () => {
-    return new Server ({
-        models : {
-            entry : Model.extend({
-                diary : belongsTo()
-            }),
-            diary : Model.extend({
-                entry : hasMany(),
-                user : belongsTo()
-            }),
-            user : Model.extend({
-                diary : hasMany()
-            })
-        },
+export const setupServer = (env?: string): Server => {
+  return new Server({
+    environment: env ?? 'development',
 
-        factories : {
-            user : Factory.extend({
-                username : 'ali',
-                password : 'aliijaz',
-                email : 'ali@email.com'
-            })
-        },
+    models: {
+      entry: Model.extend({
+        diary: belongsTo(),
+      }),
+      diary: Model.extend({
+        entry: hasMany(),
+        user: belongsTo(),
+      }),
+      user: Model.extend({
+        diary: hasMany(),
+      }),
+    },
 
-        seeds : (dummyserver) : any => {
-             dummyserver.create('user')
-        },
+    factories: {
+      user: Factory.extend({
+        username: 'test',
+        password: 'password',
+        email: 'test@email.com',
+      }),
+    },
 
-        routes() : void {
-            this.urlPrefix = "api"
+    seeds: (server): any => {
+      server.create('user');
+    },
 
-            this.get('/diaries/entries/:id',diary.getthelistofentries);
-            this.get('/diaries/ :id', diary.getthelistofdiaries);
-            this.post('/auth/login', user.login)
-            this.post('/auth/signup', user.signup)
-            this.post('/diaries/ :id', diary.createDiary)
-            this.post('/diaries/entry', diary.createnewentry)
-            this.put('diaries/:id', diary.updateDiary)
-            this.put('diaries/entry/ :id', diary.updatetheentry)
-        }
-    })
-}
+    routes(): void {
+      this.urlPrefix = 'https://diaries.app';
+      
+            this.get('/diaries/entries/:id', diary.getEntries);
+            this.get('/diaries/:id', diary.getDiaries);
+      
+            this.post('/auth/login', user.login);
+            this.post('/auth/signup', user.signup);
+      
+            this.post('/diaries/', diary.create);
+            this.post('/diaries/entry/:id', diary.addEntry);
+      
+            this.put('/diaries/entry/:id', diary.updateEntry);
+            this.put('/diaries/:id', diary.updateDiary);
+          },
+        });
+      };
