@@ -14,7 +14,7 @@ import DiaryEntriesList from './diaryentrieslist';
 import { useDispatch } from 'react-redux';
 import dayjs from 'dayjs';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import Grid, { GridSpacing } from '@material-ui/core/Grid';
+import Grid from '@material-ui/core/Grid';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import { Card, CardContent } from '@material-ui/core';
@@ -59,7 +59,7 @@ const Diaries: FC = () => {
   const [editor, setEditor] = useState(false);
   const [diary, setDiary] = useState<diary>();
   const [isEditing, setIsEditing] = useState(false);
-  const totalentries = diary?.entryids?.length;
+  // const totalentries = diary?.entryids?.length;
   useEffect(() => {
     const fetchDiaries = async () => {
       if (user) {

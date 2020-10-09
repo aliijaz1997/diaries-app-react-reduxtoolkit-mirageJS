@@ -66,7 +66,7 @@ const schema = Yup.object().shape({
 const Auth: FC = () => {
   const classes = useStyles();
   const [islogin, setIslogin] = useState(true);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const dispatch = useDispatch(); // Here I have used simply dispatch to not make it complex
   const { handleSubmit, register, errors } = useForm<user>({
     validationSchema: schema
@@ -89,7 +89,7 @@ const Auth: FC = () => {
 
 
     }).finally(() => {
-      setLoading(false)
+      // setLoading(false)
     })
   }
   return (

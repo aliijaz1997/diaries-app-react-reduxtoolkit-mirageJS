@@ -5,7 +5,7 @@ import Markdown from 'markdown-to-jsx';
 import http from '../../Mirage-Server/Axios/axios-api';
 import { entry } from './../../Interfaces/entry.interface';
 import { diary } from '../../Interfaces/diary.interface';
-import { setCurrentlyEditing, setCanEdit, setActiveDiaryId } from './../../ReduxStore/editorslice';
+import { setCurrentlyEditing, setCanEdit } from './../../ReduxStore/editorslice';
 import { updateDiary } from '../../ReduxStore/diaryslice';
 import { updateEntry } from './../../ReduxStore/entryslice';
 // import { showAlert } from '../../util';
